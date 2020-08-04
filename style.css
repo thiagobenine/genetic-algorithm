@@ -1,0 +1,34 @@
+p {
+  font-size: 30px;
+}
+
+.main-container {
+  display: flex;
+  height: 400px;
+}
+
+.buttons-container {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.button {
+  width: 300px;
+  margin-bottom: 10px
+}
+
+.results-container {
+  margin-left: 10px;
+  display: flex;
+}
+
+.text-title {
+  border: 0;
+  margin: 0;
+  margin-right: 30px
+}
+
+.result-box {
+  margin-left: 50px
+}

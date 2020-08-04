@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport">
+    <title>Algorítimo Evolutivo</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <div class="main-container">
+        <div class="buttons-container">
+            <button class="button" onclick="loop()">
+                <p>New Generation</p>
+            </button>
+            <button class="button" onclick="start()">
+                <p>Restart</p>
+            </button>
+        </div>
+
+        <div class="results-container">
+            <div class="generation-results result-box">
+                <p class='text-title'>Generation:</p>
+                <p class="text-result" id="generation"></p>
+            </div>
+
+            <div class="max-fitness-results result-box">
+                <p class='text-title'>Max Fitness:</p>
+                <p class="text-result" id="max-fitness"></p>
+            </div>
+
+            <div class="best-inidividual-results result-box">
+                <p class='text-title'>Best Individual:</p>
+                <p class="text-result" id="best-individual"></p>
+            </div>
+
+            <div class="population-results result-box">
+                <p class='text-title'>Population Fitness:</p>
+                <p class="text-result" id="population-fitness-0"></p>
+                <p class="text-result" id="population-fitness-1"></p>
+                <p class="text-result" id="population-fitness-2"></p>
+                <p class="text-result" id="population-fitness-3"></p>
+                <p class="text-result" id="population-fitness-4"></p>
+                <p class="text-result" id="population-fitness-5"></p>
+                <p class="text-result" id="population-fitness-6"></p>
+                <p class="text-result" id="population-fitness-7"></p>
+                <p class="text-result" id="population-fitness-8"></p>
+                <p class="text-result" id="population-fitness-9"></p>
+            </div>
+        </div>
+    </div>
+    <script src="calc.js"></script>
+    <script src="main.js"></script>
+</body>
+
+</html>
