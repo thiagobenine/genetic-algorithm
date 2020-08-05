@@ -10,13 +10,16 @@
 
 <body>
     <div class="main-container">
-        <div class="buttons-container">
+        <div class="buttons-and-input-container">
             <button class="button" onclick="loop()">
                 <p>New Generation</p>
             </button>
             <button class="button" onclick="start()">
-                <p>Restart</p>
+                <p>Start</p>
             </button>
+            <input type="text" id="inputText" placeholder="Type your function" oninput="start()" class="input">
+            <input type="number" id="leftBoundNumber" placeholder="Type left bound (default: -10)" oninput="setLeftBound()" class="input">
+            <input type="number" id="rightBoundNumber" placeholder="Type right bound (default: 10)" oninput="setRightBound()" class="input">
         </div>
 
         <div class="results-container">
@@ -50,7 +53,7 @@
             </div>
         </div>
     </div>
-    <script src="calc.js"></script>
+    <script src="parser2.js"></script>
     <script src="main.js"></script>
 </body>
 

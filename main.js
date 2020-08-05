@@ -9,13 +9,18 @@ bestFit = 0.0; //guardo o maior fitness, o valor do melhor indíviduo da geraç�
 besti  = 0; //guarda o indice do melhor individuo
 i = g = 0; //iteradores, o g guarda o valor da geração
 
-a = b = 0; //intervalo da função
+leftBoundNumber = -10; //intervalo esquerdo da função
+rightBoundNumber = 10; //intervalo direito da função
 
-a = -10
-b = 10;
+// a = -10
+// b = 10;
+
+inputText = document.querySelector("#inputText")
+leftBoundInput = document.querySelector("#leftBoundNumber")
+rightBoundInput = document.querySelector("#rightBoundNumber")
 
 function execJison (input) {
-    return calculator.parse(input);
+    return parser.parse(input);
 }
 
 function run(input, min, max){
@@ -48,9 +53,17 @@ function printResults(){
     }
 }
 
-function loop(input) {
+function setLeftBound() {
+    leftBoundNumber = leftBoundInput.value
+}
+
+function setRightBound(){
+    rightBoundNumber = rightBoundInput.value
+}
+
+function loop() {
     g++;
-    evaluateFitness(input);
+    evaluateFitness();
     bestFitness();
 
     printResults();
@@ -64,8 +77,8 @@ function loop(input) {
 //função que inicializa a população
 function generatePopulation(){
     for (i=0;i<10;i++){
-        xArray[i] = (Math.random() * (b - a) + a);
-        yArray[i] = (Math.random() * (b - a) + a);
+        xArray[i] = (Math.random() * (rightBoundNumber - leftBoundNumber) + leftBoundNumber);
+        yArray[i] = (Math.random() * (rightBoundNumber - leftBoundNumber) + leftBoundNumber);
     }
 }
 
@@ -84,9 +97,11 @@ function bestFitness(){
 
 //função fitness avalia o quão bom cada individuo da população é.
 //como queremos o máximo da função ele avalia o valor da função nos pontos gerados
-function evaluateFitness(input){
+function evaluateFitness(){
    x = 0.0;
    y = 0.0;
+
+   input = inputText.value
 
   for (i=0; i<10; i++){
         x=xArray[i];
@@ -98,7 +113,7 @@ function evaluateFitness(input){
 }
 
 function replaceVars(input, x ,y) {
-    return input.replace("x", x).replace("y", y)
+    return input.replace(/x/g, x).replace(/y/g, y)
 }
 
 // usa o melhor indivíduo para gerar a próxima geração cruzando os genes dele com os demais.
@@ -113,9 +128,9 @@ function crossOver(){
         xArray[i] = (xArray[i] + xArray[besti])/ 2.0;
         yArray[i] = (yArray[i] + yArray[besti])/ 2.0;
 
-        mutation = ((Math.random() * 10 - (5))/1000.0);
+        mutation = ((Math.random() * 10 - (5))/10000.0);
         xArray[i] = xArray[i] + (mutation);
-        mutation = ((Math.random() * 10 - (5))/1000.0);
+        mutation = ((Math.random() * 10 - (5))/10000.0);
         yArray[i] = yArray[i] + (mutation);
         
     }

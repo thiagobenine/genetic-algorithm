@@ -7,7 +7,7 @@ p {
   height: 400px;
 }
 
-.buttons-container {
+.buttons-and-input-container {
   display: flex;
   flex-direction: column;
 
@@ -31,4 +31,8 @@ p {
 
 .result-box {
   margin-left: 50px
+}
+
+.input {
+  margin-bottom: 10px;
 }
