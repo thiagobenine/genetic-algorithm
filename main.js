@@ -16,8 +16,8 @@ rightBoundNumber = 10; //intervalo direito da função
 // b = 10;
 
 inputText = document.querySelector("#inputText")
-leftBoundInput = document.querySelector("#leftBoundNumber")
-rightBoundInput = document.querySelector("#rightBoundNumber")
+leftBoundInput = document.querySelector("#leftBoundInput")
+rightBoundInput = document.querySelector("#rightBoundInput")
 
 function execJison (input) {
     return parser.parse(input);
@@ -54,11 +54,17 @@ function printResults(){
 }
 
 function setLeftBound() {
-    leftBoundNumber = leftBoundInput.value
+    if (leftBoundInput.value == "") {
+        leftBoundNumber = -10
+    }
+    leftBoundNumber = parseFloat(leftBoundInput.value)
 }
 
 function setRightBound(){
-    rightBoundNumber = rightBoundInput.value
+    if (rightBoundInput.value == "") {
+        rightBoundNumber = -10
+    }
+    rightBoundNumber = parseFloat(rightBoundInput.value)
 }
 
 function loop() {
@@ -141,12 +147,14 @@ function crossOver(){
 function naturalSelection(){
     minfit = fitness[0];
     mini = 0;
-
-    for (i=1;i<10;i++){
-        if (fitness[i]<minfit){
-            minfit = fitness[i];
-            mini = i;
+    for (i=0;i<3;i++){
+        for (i=0;i<10;i++){
+            if (fitness[i]<minfit){
+                minfit = fitness[i];
+                mini = i;
+            }
         }
+        xArray[i] = (Math.random() * (rightBoundNumber - leftBoundNumber) + leftBoundNumber);
+        yArray[i] = (Math.random() * (rightBoundNumber - leftBoundNumber) + leftBoundNumber);
     }
-    xArray[mini] = (Math.random() * 20);
 }
