@@ -36,3 +36,10 @@ p {
 .input {
   margin-bottom: 10px;
 }
+
+#plot-container {
+  /* border: 1px solid black; */
+  /* width: 400px; */
+  position: absolute;
+  bottom: 0;
+}

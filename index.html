@@ -10,6 +10,8 @@
 
 <body>
     <div class="main-container">
+        <div id="plot-container"></div>
+
         <div class="buttons-and-input-container">
             <button class="button" onclick="loop()">
                 <p>New Generation</p>
@@ -17,9 +19,10 @@
             <button class="button" onclick="start()">
                 <p>Start</p>
             </button>
-            <input type="text" id="inputText" placeholder="Type your function" oninput="start()" class="input">
+            <input type="text" id="inputText" placeholder="Type your function" oninput="" class="input">
             <input type="number" id="leftBoundInput" placeholder="Type left bound (default: -10)" oninput="setLeftBound()" class="input">
             <input type="number" id="rightBoundInput" placeholder="Type right bound (default: 10)" oninput="setRightBound()" class="input">
+            <input type="number" id="mutationRateInput" placeholder="Type the mutation rate (default: 10^-5)" oninput="setMutationRate()" class="input">
         </div>
 
         <div class="results-container">
@@ -55,6 +58,32 @@
     </div>
     <script src="parser2.js"></script>
     <script src="main.js"></script>
+    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+    <script>
+                z1 = [
+            [8.83,8.89,8.81,8.87,8.9,8.87],
+            [8.89,8.94,8.85,8.94,8.96,8.92],
+            [8.84,8.9,8.82,8.92,8.93,8.91],
+            [8.79,8.85,8.79,8.9,8.94,8.92],
+            [8.79,8.88,8.81,8.9,8.95,8.92],
+            [8.8,8.82,8.78,8.91,8.94,8.92],
+            [8.75,8.78,8.77,8.91,8.95,8.92],
+            [8.8,8.8,8.77,8.91,8.95,8.94],
+            [8.74,8.81,8.76,8.93,8.98,8.99],
+            [8.89,8.99,8.92,9.1,9.13,9.11],
+            [8.97,8.97,8.91,9.09,9.11,9.11],
+            [9.04,9.08,9.05,9.25,9.28,9.27],
+            [9,9.01,9,9.2,9.23,9.2],
+            [8.99,8.99,8.98,9.18,9.2,9.19],
+            [8.93,8.97,8.97,9.18,9.2,9.18]
+        ];
+
+        var y = [1,2,3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+        var x = [1, 2, 2.5,3, 3.5, 4]
+
+        var data_z1 = {x: x, y: y, z: z1, type: 'surface', showscale: true};
+        // Plotly.newPlot('plot-container', [data_z1]);
+    </script>
 </body>
 
 </html>
