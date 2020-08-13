@@ -38,6 +38,10 @@ function start(){
     g = 0;
     clear();
     generatePopulation();
+    evaluateFitness();
+    bestFitness();
+    plotMarker();
+    printResults();
 }
 
 // função que limpa os dados exibidos no front
