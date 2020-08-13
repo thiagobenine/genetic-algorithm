@@ -1,8 +1,8 @@
-//vetor que guarda o valor de x q foi aleatóriamente gerado para ser avaliado
+// vetores que guardam os valores de x e y q foram aleatóriamente gerados para serem avaliados
 xArray = Array.apply(null, Array(10)).map(function () {});
 yArray = Array.apply(null, Array(10)).map(function () {});
 
-//vetores que guardam os valores para se plotar a função
+// vetores que guardam os valores para se plotar a função
 var xSpace = Array.apply(null, Array(50)).map(function () {});
 var ySpace = Array.apply(null, Array(50)).map(function () {});
 var z = new Array(50);
@@ -10,31 +10,29 @@ for(i=0; i<50; i++){
         z[i] = new Array(50);
 }
 
-//vetor que guarda o fitness (no caso é o valor avaliado da função)
+// vetor que guarda o fitness (no caso é o valor avaliado da função)
 fitness = Array.apply(null, Array(10)).map(function () {});
 
-bestFit = 0.0; //guardo o maior fitness, o valor do melhor indíviduo da geração
-besti  = 0; //guarda o indice do melhor individuo
-i = j = g = 0; //iteradores, o g guarda o valor da geração
+bestFit = 0.0; // guardo o maior fitness, o valor do melhor indíviduo da geração
+besti  = 0; // guarda o indice do melhor individuo
+i = j = g = 0; // iteradores, o g guarda o valor da geração
 
 leftBoundNumber = -10; //intervalo esquerdo da função
 rightBoundNumber = 10; //intervalo direito da função
 mutationRate = execJison("10^-5"); //taxa de mutação
 
+// variáveis que fazem referencia aos inputs do front
 inputText = document.querySelector("#inputText")
 leftBoundInput = document.querySelector("#leftBoundInput")
 rightBoundInput = document.querySelector("#rightBoundInput")
 mutationRateInput = document.querySelector("#mutationRateInput")
 
+// função que parseia e calcula o valor de uma expressão matemática (usando a lib Jison)
 function execJison (input) {
     return parser.parse(input);
 }
 
-function run(input, min, max){
-    start(min, max);
-    loop(input);
-}
-
+// função que inicia todo o processo: exibe o gráfico da funcao, limpa o ambiente e gera a população
 function start(){
     evaluateFunction()
     g = 0;
@@ -42,7 +40,7 @@ function start(){
     generatePopulation();
 }
 
-// função que limpa os dados
+// função que limpa os dados exibidos no front
 function clear(){
     document.querySelector("#generation").innerHTML = 0;
     document.querySelector("#max-fitness").innerHTML = 0;
@@ -52,6 +50,7 @@ function clear(){
     }
 }
 
+// função que exibe os dados no front
 function printResults(){
     document.querySelector("#generation").innerHTML = g;
     document.querySelector("#max-fitness").innerHTML = bestFit;
@@ -61,6 +60,7 @@ function printResults(){
     }
 }
 
+// função auxiliar responsável por setar o limite esquerdo
 function setLeftBound() {
     if (leftBoundInput.value == "") {
         leftBoundNumber = -10
@@ -68,6 +68,7 @@ function setLeftBound() {
     leftBoundNumber = parseFloat(leftBoundInput.value)
 }
 
+// função auxiliar responsável por setar o limite direito
 function setRightBound(){
     if (rightBoundInput.value == "") {
         rightBoundNumber = -10
@@ -75,6 +76,7 @@ function setRightBound(){
     rightBoundNumber = parseFloat(rightBoundInput.value)
 }
 
+// função auxiliar responsável por setar a taxa de mutação
 function setMutationRate(){
     if (mutationRateInput.value == "") {
         mutationRate = execJison("10^-5")
@@ -82,6 +84,8 @@ function setMutationRate(){
     mutationRate = execJison(mutationRateInput.value)
 }
 
+// função responsável pelo fluxo geral da nova geração: avalia os novos indivíduos e qual o melhor gerado.
+// além disso, exibe esses individuos no grafico e realiza o crossOver
 function loop() {
     g++;
     evaluateFitness();
@@ -91,11 +95,11 @@ function loop() {
     plotMarker();
     crossOver();
 
-    //a cada 10 gerações jogamos o pior fora
+    //a cada 10 gerações jogamos os 3 piores fora
     if(( g % 10 ) == 0) naturalSelection();
 }
 
-//função que inicializa a população
+// função que inicializa a população (gera os 10 indivíduos aleatórios iniciais)
 function generatePopulation(){
     for (i=0;i<10;i++){
         xArray[i] = (Math.random() * (rightBoundNumber - leftBoundNumber) + leftBoundNumber);
@@ -103,7 +107,7 @@ function generatePopulation(){
     }
 }
 
-//função que busca o indivíduo com maior fitness e salva o valor e seu indice
+// função que busca o indivíduo com maior fitness e salva o valor e seu indice
 function bestFitness(){
     bestFit = fitness[0];
     besti = 0;
@@ -116,14 +120,15 @@ function bestFitness(){
     }
 }
 
-//função fitness avalia o quão bom cada individuo da população é.
-//como queremos o máximo da função ele avalia o valor da função nos pontos gerados
+// função que avalia cada individuo da população na função dada pelo usuário.
+// como queremos o máximo da função, ele avalia o valor da função nos pontos gerados
 function evaluateFitness(){
    var x = 0.0;
    var y = 0.0;
 
    var input = inputText.value
 
+    // aplicando regex para substituir x^2 e y^2 por (x^2) e (y^2)
    input = input.replace(/(x\^\d+(.\d+)?)/g,'($1)').replace(/(y\^\d+(.\d+)?)/g,'($1)');
 
    for (i=0; i<10; i++){
@@ -131,7 +136,6 @@ function evaluateFitness(){
         y=yArray[i];
 
         fitness[i] = execJison(replaceVars(input, x, y));
-        //console.log(fitness[i]);
     }
 }
 
@@ -139,13 +143,15 @@ function replaceVars(input, x ,y) {
     return input.replace(/x(?!p)/g, x).replace(/y/g, y)
 }
 
-// usa o melhor indivíduo para gerar a próxima geração cruzando os genes dele com os demais.
-// pega o melhor ponto e soma com cada um dos outros e divide por 2, tirando a média.
+// função que usa o melhor indivíduo para gerar a próxima geração cruzando os genes dele com os demais.
+// funcionamento: pega o melhor ponto e soma com cada um dos outros e divide por 2, tirando a média.
 // quanto maior a mutação mais aleatório fica o filho
 function crossOver(){
     for (i=0;i<10;i++){
         var auxX = 0;
         var auxY = 0;
+
+        // ignora o melhor indivíduo
         if (i==besti)
             continue;
 
@@ -157,8 +163,8 @@ function crossOver(){
 
         mutation = ((Math.random() * 2 - 1)*mutationRate);
         xArray[i] = xArray[i] + (mutation);
-        mutation = ((Math.random() * 2 - 1)*mutationRate);
         yArray[i] = yArray[i] + (mutation);
+        
         if(xArray[i] > rightBoundNumber) 
             xArray[i] = auxX;
         if(yArray[i] > rightBoundNumber) 
@@ -167,7 +173,7 @@ function crossOver(){
     }
 }
 
-// função que mata o pior individuo e aleatoriamente cria um novo ponto,
+// função que mata os piores individuos e aleatoriamente cria 3 novos pontos,
 // isso faz com que o algoritmo consiga sair de máximos globais e não fique preso em máximos locais
 function naturalSelection(){
     worstFit = fitness[0];
@@ -202,15 +208,16 @@ function evaluateFunction(){
         }  
     }
 
-    var data_z1 = {x: xSpace, y: ySpace, z: z, type: 'surface', showscale: true};
-    Plotly.newPlot('plot-container', [data_z1]);
+    var function3d = {x: xSpace, y: ySpace, z: z, type: 'surface', showscale: true};
+    Plotly.newPlot('plot-container', [function3d]);
 }
 
+// função responsável por colocar no gráfico todos os indivíduos da população
+// e destacar o melhor indivíduo
 function plotMarker(){
-    var data_z1 = {x: xSpace, y: ySpace, z: z, type: 'surface', showscale: true};
-    console.log(xArray[besti] + " " + yArray[besti] + " " + bestFit)
+    var function3d = {x: xSpace, y: ySpace, z: z, type: 'surface', showscale: true};
     
-    var data_z2 = {
+    var bestMarker = {
         x: [xArray[besti]], 
         y: [yArray[besti]], 
         z: [bestFit],   
@@ -222,7 +229,7 @@ function plotMarker(){
         },
         type: 'scatter3d'
     };
-    var data_z3 = {
+    var allMarkers = {
         x: xArray, 
         y: yArray, 
         z: fitness,   
@@ -234,6 +241,6 @@ function plotMarker(){
         },
         type: 'scatter3d'
     };
-    Plotly.newPlot('plot-container', [data_z1, data_z3, data_z2]);
+    Plotly.newPlot('plot-container', [function3d, allMarkers, bestMarker]);
 }
 
